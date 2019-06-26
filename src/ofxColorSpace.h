@@ -1,7 +1,7 @@
 #pragma once
 #include "glm/glm.hpp"
 #include "ofColor.h"
-
+#include "ofImage.h"
 #include "ColorSpace.h"
 #include "Conversion.h"
 
@@ -61,6 +61,17 @@ namespace ofxColorSpace {
 	}
 
 
-
+	template <class T>
+	ofFloatPixels getPixelsBy(const ofFloatColor& c1, const ofFloatColor& c2, int num) {
+		const auto& cols = getGradientBy<T>(c1, c2, num);
+		ofFloatPixels pix;
+		pix.allocate(num, 1, OF_IMAGE_COLOR);
+		for (int i = 0; i < num; i++) {
+			pix[i * 3 + 0] = cols[i].r;
+			pix[i * 3 + 1] = cols[i].g;
+			pix[i * 3 + 2] = cols[i].b;
+		}
+		return pix;
+	}
 
 };
